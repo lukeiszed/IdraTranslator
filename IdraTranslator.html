@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Idra translator</title>
+    <style>
+        .select-all {
+            -webkit-user-select: all;
+            -moz-user-select: all;
+            -ms-user-select: all;
+            user-select: all;
+        }
+    </style>
+</head>
+
+<body style="display: flex;">
+    <div>
+        <h1>IDRA TRANSLATOR</h1>
+        <img src="idra.gif" alt="">
+    </div>
+
+    <div>
+        <p>TESTO DA TRADURRE</p>
+        <input type="text" id="tradtxt">
+        <button onclick="Translate(0)">TRADUCI</button>
+        <span id="sec" onclick="GetPageElement()">LINKS:</span>
+        <div id="links"></div>
+    </div>
+
+    <script>
+        function Translate(index) {
+
+            var langs = ["en", "es", "pl", "ro", "de", "fr"];
+            var langLabels = ["Inglese", "Spagnolo", "Polacco", "Rumeno", "Tedesco", "Francese"];
+            var source = document.getElementById("tradtxt").value;
+
+            var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=it&tl=" + langs[index] + "&dt=t&q=" + encodeURI(source);
+
+            let request = new XMLHttpRequest();
+            request.open("GET", url);
+            request.onreadystatechange = function () {
+                if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                    var data = JSON.parse(request.responseText);
+                    translatedText = data[0][0][0];
+                    console.log(translatedText);
+                    var para = document.createElement("p");
+                    var label = document.createTextNode(langLabels[index] + " : ");
+                    para.appendChild(label);
+                    var span = document.createElement("span");
+                    span.className = "select-all";
+                    var text = document.createTextNode(translatedText);
+                    span.appendChild(text);
+                    para.appendChild(span);
+
+                    var linkCont = document.getElementById("links");
+                    linkCont.appendChild(para);
+
+                    if (index + 1 !== langs.length) {
+                        Translate(index + 1);
+                    }
+                }
+            }
+            request.send();
+        }
+    </script>
+
+</body>
+
+</html>

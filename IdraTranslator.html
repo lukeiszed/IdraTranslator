@@ -33,6 +33,15 @@
     <script>
         function Translate(index) {
 
+            if (index === 0) {
+                // clear 
+                var linkCont = document.getElementById("links");
+                while (linkCont.firstChild) {
+                    linkCont.removeChild(linkCont.firstChild);
+                }
+            }
+
+
             var langs = ["en", "es", "pl", "ro", "de", "fr"];
             var langLabels = ["Inglese", "Spagnolo", "Polacco", "Rumeno", "Tedesco", "Francese"];
             var source = document.getElementById("tradtxt").value;

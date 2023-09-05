@@ -13,6 +13,9 @@
             -ms-user-select: all;
             user-select: all;
         }
+        .key {
+            font-size: 30px;
+        }
     </style>
 </head>
 
@@ -26,7 +29,7 @@
         <p>TESTO DA TRADURRE</p>
         <input type="text" id="tradtxt">
         <button onclick="Translate(0)">TRADUCI</button>
-        <span id="sec" onclick="GetPageElement()">LINKS:</span>
+        <span id="sec" onclick="GetPageElement()"></span>
         <div id="links"></div>
     </div>
 
@@ -56,6 +59,7 @@
                     translatedText = data[0][0][0];
                     console.log(translatedText);
                     var para = document.createElement("p");
+                    para.className = "key";
                     var label = document.createTextNode(langLabels[index] + " : ");
                     para.appendChild(label);
                     var span = document.createElement("span");
